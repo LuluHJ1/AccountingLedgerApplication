@@ -21,29 +21,28 @@ public class FileManager {
             
             while((input = bufferedReader.readLine()) != null){
                 String[] csvRow = input.split("\\|");
-                
+
                 String dateString = csvRow[0];
                 String  timeString = csvRow[1];
-                
+
                 LocalDate parsedDate = LocalDate.parse(dateString, dateFormatter);
                 LocalTime parsedTime = LocalTime.parse(timeString, timeFormatter);
-                
-                String description = csvRow[3];
-                String vendor = csvRow[4];
-                double amount = Double.parseDouble(csvRow[5]);
+
+                String description = csvRow[2];
+                String vendor = csvRow[3];
+                double amount = Double.parseDouble(csvRow[4]);
+
                 Transactions transaction = new Transactions(
                         parsedDate, parsedTime, description, vendor,amount);
                 transactions.add(transaction);
             }
-            bufferedReader.close();
-            return transactions;
 
         }catch(IOException e){
             System.out.println("There was a problem reading the file");
         }catch(Exception ex){
-            System.out.println("There was  problem with the file.");
+            System.out.println("Error");
         }
-        return transactions;  
+        return transactions;
     }
     public static void writeTransaction(Transactions transactions){
         try{
@@ -53,6 +52,10 @@ public class FileManager {
                 fileWriter.write(System.lineSeparator());
             }
 
+            fileWriter.write(String.format("%s|%s|%s|%s|%.2f", transactions.getParsedDate(), 
+                    transactions.getParsedTime(), transactions.getDescription(), transactions.getVendor(), transactions.getAmount()));
+
+            fileWriter.close();
         }
         catch(IOException e){
             System.out.println("Error writing file.");

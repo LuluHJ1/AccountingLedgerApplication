@@ -1,9 +1,9 @@
 package org.example;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -30,7 +30,9 @@ public class Main {
                 case "P":
                     System.out.println("Enter payment amount: ");
                     double paymentAmount = scanner.nextDouble();
-                    makePayment(paymentAmount, transactions);
+                    System.out.println("Who is the payment to: ");
+                    String entity = scanner.next();
+                    makePayment(paymentAmount, entity, transactions);
                     System.out.println("Payment Complete");
                     break;
                 case "L":
@@ -51,7 +53,7 @@ public class Main {
                     }else if(option.equalsIgnoreCase("R")){
                         System.out.println("0. Back");
                         System.out.println("1. Search by vendor");
-                        System.out.println("2.Previous month");
+                        System.out.println("2. Previous month");
                         int move = scanner.nextInt();
 
                         if(move ==1){
@@ -97,23 +99,27 @@ public class Main {
         Transactions deposit = new Transactions(
                 LocalDate.now(), LocalTime.now(), "Deposit", "BANK", amount);
         transactions.add(deposit);
+        FileManager.writeTransaction(deposit);
+
     }
 
-    public static void makePayment(double amount, List<Transactions> transactions) {
+    public static void makePayment(double amount, String entity, List<Transactions> transactions) {
         Transactions payment = new Transactions(
-                LocalDate.now(), LocalTime.now(), "Payment", "Entity", -amount);
+                LocalDate.now(), LocalTime.now(), "Payment", entity, -amount);
         transactions.add(payment);
+        FileManager.writeTransaction(payment);
     }
 
     public static void showAllEntries(List<Transactions> transactions) {
         for (Transactions t : transactions) {
-            System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" + t.getVendor() + "|" + t.getAmount());
+            System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" +
+                    t.getVendor() + "|" + t.getAmount());
         }
     }
     public static void showAllDeposits(List<Transactions> transactions) {
         for (Transactions t : transactions) {
             if (t.getAmount() > 0) {
-                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" +
                         t.getVendor() + "|" + t.getAmount());
             }
         }
@@ -121,7 +127,7 @@ public class Main {
     public static void showAllPayments(List<Transactions> transactions){
         for(Transactions t : transactions){
             if(t.getAmount() < 0) {
-                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" +
                         t.getVendor() + "|" + t.getAmount());
             }
         }
@@ -130,7 +136,7 @@ public class Main {
             for (Transactions t : transactions){
                 if(t.getVendor().equalsIgnoreCase(vendor)){
                     System.out.println(
-                            t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                            t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" +
                                     t.getVendor() + "|" + t.getAmount());
 
             }
