@@ -46,14 +46,15 @@ public class FileManager {
     }
     public static void writeTransaction(Transactions transactions){
         try{
-            File file = new File("src/main/resources/transactions.csv");
-            FileWriter fileWriter = new FileWriter(file, true);
-            if(file.length() > 0){
+           File file = new File("src/main/resources/transactions.csv");
+           FileWriter fileWriter = new FileWriter(file, true);
+           if(file.length() > 0){
                 fileWriter.write(System.lineSeparator());
             }
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
             fileWriter.write(String.format("%s|%s|%s|%s|%.2f", transactions.getParsedDate(), 
-                    transactions.getParsedTime(), transactions.getDescription(), transactions.getVendor(), transactions.getAmount()));
+                    transactions.getParsedTime().format(timeFormatter), transactions.getDescription(), transactions.getVendor(), transactions.getAmount()));
 
             fileWriter.close();
         }

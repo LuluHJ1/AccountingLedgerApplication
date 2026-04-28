@@ -35,49 +35,55 @@ public class Main {
                     System.out.println("Payment Complete");
                     break;
                 case "L":
+                    while(true) {
+                        showLedgerMenu();
 
-                    System.out.println("A) Display all entries");
-                    System.out.println("D) Display all deposits");
-                    System.out.println("P) Display all payments");
-                    System.out.println("R) Display reports");
+                        String option = scanner.next();
 
-                    String option = scanner.next();
-                    if (option.equalsIgnoreCase("A")) {
-                        showAllEntries(transactions);
-                    } else if (option.equalsIgnoreCase("D")) {
-                        showAllDeposits(transactions);
-                    } else if (option.equalsIgnoreCase("P")) {
-                        showAllPayments(transactions);
+                        if (option.equalsIgnoreCase("A")) {
+                            showAllEntries(transactions);
 
-                    }else if(option.equalsIgnoreCase("R")){
-                        System.out.println("0. Back");
-                        System.out.println("1. Search by vendor");
-                        System.out.println("2. Previous month");
-                        int move = scanner.nextInt();
+                        } else if (option.equalsIgnoreCase("D")) {
+                            showAllDeposits(transactions);
 
-                        if(move ==1){
-                            System.out.println("Enter vendor name: ");
-                            String vendor = scanner.next();
-                            searchByVendor(transactions, vendor);
+                        } else if (option.equalsIgnoreCase("P")) {
+                            showAllPayments(transactions);
 
+                        } else if (option.equalsIgnoreCase("R")) {
+
+                            while (true) {
+                                showReportsMenu();
+
+                                int move = scanner.nextInt();
+
+                                if (move == 1) {
+                                    System.out.println("Enter vendor name: ");
+                                    String vendor = scanner.next();
+                                    searchByVendor(transactions, vendor);
+
+                                } else if (move == 2) {
+                                    showPreviousMonth(transactions);
+                                } else if (move == 0) {
+                                    break;
+                                }
+                                else{
+                                    System.out.println("Invalid input");
+                                }
+                            }
+                            }else if (option.equalsIgnoreCase("H")) {
+                                break;
+
+                            } else {
+                                System.out.println("Invalid option");
+                            }
                         }
-                       else if(move == 2){
-                            showPreviousMonth(transactions);
-                        }
-                        if(move == 0){
-                            break;
-                        }
-
-
-                    }else{
-                        System.out.println("Invalid option");
-                    }
 
                     break;
 
                 case "X":
                     System.out.println("Exiting");
-                    return;
+                    System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid option");
             }
@@ -93,7 +99,21 @@ public class Main {
         System.out.println("X) Exit");
         System.out.println("Enter Letter Option: ");
     }
-
+    public static void showLedgerMenu(){
+        System.out.println("Ledger Page");
+        System.out.println("----------------------------");
+        System.out.println("A) Display all entries");
+        System.out.println("D) Display all deposits");
+        System.out.println("P) Display all payments");
+        System.out.println("R) Display reports");
+        System.out.println("H) Back to home page");
+        System.out.println("Enter letter option: ");
+    }
+    public static void showReportsMenu(){
+        System.out.println("0. Back to ledger page");
+        System.out.println("1. Search by vendor");
+        System.out.println("2. Previous month");
+    }
     public static void addDeposit(double amount, List<Transactions> transactions) {
         Transactions deposit = new Transactions(
                 LocalDate.now(), LocalTime.now(), "Deposit", "BANK", amount);
