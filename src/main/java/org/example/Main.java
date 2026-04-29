@@ -2,6 +2,7 @@ package org.example;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,19 +21,27 @@ public class Main {
 
             switch (choice) {
                 case "D":
-                    System.out.println("Enter deposit amount: ");
-                    double depositAmount = scanner.nextDouble();
-                    addDeposit(depositAmount, transactions);
-                    System.out.println("Deposit complete.");
+                    try {
+                        System.out.println("Enter deposit amount: ");
+                        double depositAmount = scanner.nextDouble();
+                        addDeposit(depositAmount, transactions);
+                        System.out.println("Deposit complete.");
+                    }catch(InputMismatchException ex){
+                        System.out.println("Please enter number");
+                    }
                     break;
 
                 case "P":
-                    System.out.println("Enter payment amount: ");
-                    double paymentAmount = scanner.nextDouble();
-                    System.out.println("Who is the payment to: ");
-                    String entity = scanner.next();
-                    makePayment(paymentAmount, entity, transactions);
-                    System.out.println("Payment Complete");
+                    try {
+                        System.out.println("Enter payment amount: ");
+                        double paymentAmount = scanner.nextDouble();
+                        System.out.println("Who is the payment to: ");
+                        String entity = scanner.next();
+                        makePayment(paymentAmount, entity, transactions);
+                        System.out.println("Payment Complete");
+                    }catch(InputMismatchException e){
+                        System.out.println("Invalid input");
+                    }
                     break;
                 case "L":
                     while(true) {
@@ -53,20 +62,22 @@ public class Main {
 
                             while (true) {
                                 showReportsMenu();
+                                try {
+                                    int move = scanner.nextInt();
 
-                                int move = scanner.nextInt();
+                                    if (move == 1) {
+                                        System.out.println("Enter vendor name: ");
+                                        String vendor = scanner.next();
+                                        searchByVendor(transactions, vendor);
 
-                                if (move == 1) {
-                                    System.out.println("Enter vendor name: ");
-                                    String vendor = scanner.next();
-                                    searchByVendor(transactions, vendor);
-
-                                } else if (move == 2) {
-                                    showPreviousMonth(transactions);
-                                } else if (move == 0) {
-                                    break;
-                                }
-                                else{
+                                    } else if (move == 2) {
+                                        showPreviousMonth(transactions);
+                                    } else if (move == 0) {
+                                        break;
+                                    } else {
+                                        System.out.println("Invalid input");
+                                    }
+                                }catch(InputMismatchException ex){
                                     System.out.println("Invalid input");
                                 }
                             }
