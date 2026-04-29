@@ -27,7 +27,8 @@ public class Main {
                         addDeposit(depositAmount, transactions);
                         System.out.println("Deposit complete.");
                     }catch(InputMismatchException ex){
-                        System.out.println("Please enter number");
+                        System.out.println("Please enter number.");
+                        scanner.nextLine();
                     }
                     break;
 
@@ -36,7 +37,8 @@ public class Main {
                         System.out.println("Enter payment amount: ");
                         double paymentAmount = scanner.nextDouble();
                         System.out.println("Who is the payment to: ");
-                        String entity = scanner.next();
+                        scanner.nextLine();
+                        String entity = scanner.nextLine();
                         makePayment(paymentAmount, entity, transactions);
                         System.out.println("Payment Complete");
                     }catch(InputMismatchException e){
@@ -79,6 +81,7 @@ public class Main {
                                     }
                                 }catch(InputMismatchException ex){
                                     System.out.println("Invalid input");
+                                    scanner.nextLine();
                                 }
                             }
                             }else if (option.equalsIgnoreCase("H")) {
