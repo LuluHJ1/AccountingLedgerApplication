@@ -2,10 +2,7 @@ package org.example;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Comparator;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -19,6 +16,7 @@ public class Main {
             showMenu();
 
             String choice = scanner.next();
+            choice = choice.toUpperCase();
 
             switch (choice) {
                 case "D":
@@ -71,7 +69,8 @@ public class Main {
 
                                     if (move == 1) {
                                         System.out.println("Enter vendor name: ");
-                                        String vendor = scanner.next();
+                                        scanner.nextLine();
+                                        String vendor = scanner.nextLine().toLowerCase();
                                         searchByVendor(transactions, vendor);
 
                                     } else if (move == 2) {
@@ -89,6 +88,7 @@ public class Main {
                                         break;
                                     } else {
                                         System.out.println("Invalid input");
+                                        break;
                                     }
                                 }catch(InputMismatchException ex){
                                     System.out.println("Invalid input");
@@ -137,7 +137,10 @@ public class Main {
     public static void showReportsMenu(){
         System.out.println("0. Back to ledger page");
         System.out.println("1. Search by vendor");
-        System.out.println("2. Previous month");
+        System.out.println("2. Previous month transactions");
+        System.out.println("3. Month to date transactions");
+        System.out.println("4. Previous year transactions");
+        System.out.println("5. Year to date transaction");
     }
     public static void addDeposit(double amount, List<Transactions> transactions) {
         Transactions deposit = new Transactions(
@@ -198,8 +201,10 @@ public class Main {
             LocalDate date = t.getParsedDate();
             if((date.isEqual(firstDayLastMonth) || date.isAfter(firstDayLastMonth)) &&
                     (date.isEqual(lastDayLastMonth) || date.isBefore(lastDayLastMonth))){
-                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" +
                         t.getVendor() + "|" + t.getAmount());
+
+
             }
         }
     }
@@ -214,9 +219,10 @@ public class Main {
 
             LocalDate date = t.getParsedDate();
 
-            if((date.isEqual(firstDayLastYear) || date.isAfter(firstDayLastYear) &&
-                    date.isEqual(lastDayLastYear) || date.isBefore(lastDayLastYear))){
-                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+            if((date.isEqual(firstDayLastYear) || date.isAfter(firstDayLastYear)) &&
+                    (date.isEqual(lastDayLastYear) || date.isBefore(lastDayLastYear))){
+
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" +
                         t.getVendor() + "|" + t.getAmount());
             }
         }
@@ -230,10 +236,10 @@ public class Main {
 
         LocalDate date = t.getParsedDate();
 
-        if((date.isEqual(startOfYear)|| date.isAfter(startOfYear)) &&
-                (date.isEqual(now)|| date.isBefore(now))){
+        if((date.isEqual(startOfYear) || date.isAfter(startOfYear)) &&
+                (date.isEqual(now) || date.isBefore(now))){
 
-                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" +
                         t.getVendor() + "|" + t.getAmount());
             }
         }
@@ -249,7 +255,7 @@ public class Main {
 
             if((date.isEqual(startOfMonth) || date.isAfter(startOfMonth)) &&
                     (date.isEqual(now) || date.isBefore(now))){
-                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() + "|" +
                         t.getVendor() + "|" + t.getAmount());
             }
         }

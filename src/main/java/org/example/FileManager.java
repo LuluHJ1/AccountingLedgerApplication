@@ -25,8 +25,8 @@ public class FileManager {
                 String dateString = csvRow[0];
                 String  timeString = csvRow[1];
 
-                LocalDate parsedDate = LocalDate.parse(dateString, dateFormatter);
-                LocalTime parsedTime = LocalTime.parse(timeString, timeFormatter);
+                LocalDate parsedDate = LocalDate.parse(dateString.trim(), dateFormatter);
+                LocalTime parsedTime = LocalTime.parse(timeString.trim(), timeFormatter);
 
                 String description = csvRow[2];
                 String vendor = csvRow[3];
@@ -35,6 +35,7 @@ public class FileManager {
                 Transactions transaction = new Transactions(
                         parsedDate, parsedTime, description, vendor,amount);
                 transactions.add(transaction);
+
             }
 
         }catch(IOException e){
