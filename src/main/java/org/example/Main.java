@@ -203,6 +203,24 @@ public class Main {
             }
         }
     }
+    public static void showPreviousYear(List<Transactions> transactions){
+
+        LocalDate now = LocalDate.now();
+
+        LocalDate firstDayLastYear = now.minusYears(1).withDayOfYear(1);
+        LocalDate lastDayLastYear = now.withDayOfYear(1).minusDays(1);
+
+        for(Transactions t : transactions){
+
+            LocalDate date = t.getParsedDate();
+
+            if((date.isEqual(firstDayLastYear) || date.isAfter(firstDayLastYear) &&
+                    date.isEqual(lastDayLastYear) || date.isBefore(lastDayLastYear))){
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                        t.getVendor() + "|" + t.getAmount());
+            }
+        }
+    }
     public static void showYearToDate(List<Transactions> transaction){
 
         LocalDate now = LocalDate.now();
@@ -215,6 +233,22 @@ public class Main {
         if((date.isEqual(startOfYear)|| date.isAfter(startOfYear)) &&
                 (date.isEqual(now)|| date.isBefore(now))){
 
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                        t.getVendor() + "|" + t.getAmount());
+            }
+        }
+    }
+    public static void showMonthToDate(List<Transactions> transaction){
+
+        LocalDate now = LocalDate.now();
+        LocalDate startOfMonth = now.withDayOfMonth(1);
+
+        for(Transactions t : transaction){
+
+            LocalDate date = t.getParsedDate();
+
+            if((date.isEqual(startOfMonth) || date.isAfter(startOfMonth)) &&
+                    (date.isEqual(now) || date.isBefore(now))){
                 System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
                         t.getVendor() + "|" + t.getAmount());
             }
