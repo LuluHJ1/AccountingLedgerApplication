@@ -5,8 +5,12 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class Methods {
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+
     public static void showMenu() {
-        System.out.println("Home Page");
+        System.out.println(ANSI_RED + "Home Page" + ANSI_RESET);
         System.out.println("----------------------------");
         System.out.println("D) Add Deposit");
         System.out.println("P) Make Payment(Debit)");
@@ -15,7 +19,7 @@ public class Methods {
         System.out.println("Enter Letter Option: ");
     }
     public static void showLedgerMenu(){
-        System.out.println("Ledger Page");
+        System.out.println(ANSI_RED + "Ledger Page" + ANSI_RESET);
         System.out.println("----------------------------");
         System.out.println("A) Display all entries");
         System.out.println("D) Display all deposits");
@@ -25,8 +29,8 @@ public class Methods {
         System.out.println("Enter letter option: ");
     }
     public static void showReportsMenu(){
-        System.out.println("Reports Page");
-        System.out.println("------------------------------");
+        System.out.println(ANSI_RED + "Reports Page" + ANSI_RESET);
+        System.out.println("----------------------------");
         System.out.println("0. Back to ledger page");
         System.out.println("1. Search by vendor");
         System.out.println("2. Previous month transactions");
