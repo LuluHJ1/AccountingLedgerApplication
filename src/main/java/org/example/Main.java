@@ -2,6 +2,7 @@ package org.example;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -64,6 +65,7 @@ public class Main {
 
                             while (true) {
                                 showReportsMenu();
+                                transactions.sort(Comparator.comparing(Transactions::getParsedDate).thenComparing(Transactions::getParsedDate));
                                 try {
                                     int move = scanner.nextInt();
 
@@ -74,7 +76,16 @@ public class Main {
 
                                     } else if (move == 2) {
                                         showPreviousMonth(transactions);
-                                    } else if (move == 0) {
+                                    } else if (move == 3){
+                                        showMonthToDate(transactions);
+                                    }
+                                    else if (move == 4){
+                                        showPreviousYear(transactions);
+                                    }
+                                    else if (move == 5){
+                                        showYearToDate(transactions);
+                                    }
+                                    else if (move == 0) {
                                         break;
                                     } else {
                                         System.out.println("Invalid input");
@@ -187,6 +198,23 @@ public class Main {
             LocalDate date = t.getParsedDate();
             if((date.isEqual(firstDayLastMonth) || date.isAfter(firstDayLastMonth)) &&
                     (date.isEqual(lastDayLastMonth) || date.isBefore(lastDayLastMonth))){
+                System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
+                        t.getVendor() + "|" + t.getAmount());
+            }
+        }
+    }
+    public static void showYearToDate(List<Transactions> transaction){
+
+        LocalDate now = LocalDate.now();
+        LocalDate startOfYear = now.withDayOfYear(1);
+
+        for(Transactions t : transaction){
+
+        LocalDate date = t.getParsedDate();
+
+        if((date.isEqual(startOfYear)|| date.isAfter(startOfYear)) &&
+                (date.isEqual(now)|| date.isBefore(now))){
+
                 System.out.println(t.getParsedDate() + "|" + t.getParsedTime() + "|" + t.getDescription() +
                         t.getVendor() + "|" + t.getAmount());
             }
