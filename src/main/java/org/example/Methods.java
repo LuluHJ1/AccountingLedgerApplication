@@ -8,6 +8,8 @@ public class Methods {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_BLUE = "\u001b[34m";
+    public static final String ANSI_GREEN = "\u001b[32m";
 
     public static void showMenu() {
         System.out.println(ANSI_RED + "Home Page" + ANSI_RESET);
@@ -37,7 +39,7 @@ public class Methods {
         System.out.println("3. Month to date transactions");
         System.out.println("4. Previous year transactions");
         System.out.println("5. Year to date transaction");
-        System.out.println("Enter letter option: ");
+        System.out.println("Enter number option: ");
     }
     public static void addDeposit(double amount, List<Transactions> transactions) {
         Transactions deposit = new Transactions(

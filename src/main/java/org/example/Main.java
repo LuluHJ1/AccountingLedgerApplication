@@ -50,12 +50,15 @@ public class Main {
                         String option = scanner.next();
 
                         if (option.equalsIgnoreCase("A")) {
+                            System.out.println(ANSI_BLUE + "All Transactions: " + ANSI_RESET);
                             showAllEntries(transactions);
 
                         } else if (option.equalsIgnoreCase("D")) {
+                            System.out.println(ANSI_GREEN + "All Deposits: " + ANSI_RESET);
                             showAllDeposits(transactions);
 
                         } else if (option.equalsIgnoreCase("P")) {
+                            System.out.println( ANSI_BLUE + "All Payments: " + ANSI_RESET);
                             showAllPayments(transactions);
 
                         } else if (option.equalsIgnoreCase("R")) {
@@ -70,15 +73,20 @@ public class Main {
                                         System.out.println("Enter vendor name: ");
                                         scanner.nextLine();
                                         String vendor = scanner.nextLine().toLowerCase();
+                                        System.out.println("Transaction by selected vendor: ");
                                         searchByVendor(transactions, vendor);
 
                                     } else if (move == 2) {
+                                        System.out.println( ANSI_BLUE + "Previous month transactions: " + ANSI_RESET);
                                         showPreviousMonth(transactions);
                                     } else if (move == 3){
+                                        System.out.println(ANSI_BLUE+ "Month to date transactions: " + ANSI_RESET);
                                         showMonthToDate(transactions);
                                     } else if (move == 4){
+                                        System.out.println(ANSI_BLUE + "Previous year transactions: " + ANSI_RESET);
                                         showPreviousYear(transactions);
                                     } else if (move == 5){
+                                        System.out.println(ANSI_BLUE + "Year to date transactions: " + ANSI_RESET);
                                         showYearToDate(transactions);
                                     } else if (move == 0) {
                                         break;
