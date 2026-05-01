@@ -6,11 +6,14 @@ import java.util.List;
 
 public class Methods {
 
+    //Declaring color codes
+    //Declaring reset code to stop color
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_BLUE = "\u001b[34m";
     public static final String ANSI_GREEN = "\u001b[32m";
 
+    //METHODS accessed in other classes
     public static void showMenu() {
         System.out.println(ANSI_RED + "Home Page" + ANSI_RESET);
         System.out.println("----------------------------");
@@ -43,7 +46,7 @@ public class Methods {
     }
     public static void addDeposit(double amount, List<Transactions> transactions) {
         Transactions deposit = new Transactions(
-                LocalDate.now(), LocalTime.now(), "Deposit", "BANK", amount);
+                LocalDate.now(), LocalTime.now().withNano(0), "Deposit", "BANK", amount);
         transactions.add(deposit);
         FileManager.writeTransaction(deposit);
 
@@ -51,7 +54,7 @@ public class Methods {
 
     public static void makePayment(double amount, String entity, List<Transactions> transactions) {
         Transactions payment = new Transactions(
-                LocalDate.now(), LocalTime.now(), "Payment", entity, -amount);
+                LocalDate.now(), LocalTime.now().withNano(0), "Payment", entity, -amount);
         transactions.add(payment);
         FileManager.writeTransaction(payment);
     }

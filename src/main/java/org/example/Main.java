@@ -11,10 +11,12 @@ public class Main {
         List<Transactions> transactions = FileManager.getTransactions();
 
         while (true) {
-
+            //method to show menu
             showMenu();
 
+
             String choice = scanner.next();
+            //make it user-friendly with casing
             choice = choice.toUpperCase();
 
             switch (choice) {
@@ -48,8 +50,11 @@ public class Main {
                         showLedgerMenu();
 
                         String option = scanner.next();
+                        //another example making it user-friendly with equalsIgnoreCase
+                        // to ignore casing
 
                         if (option.equalsIgnoreCase("A")) {
+                            //adding color to titles
                             System.out.println(ANSI_BLUE + "All Transactions: " + ANSI_RESET);
                             showAllEntries(transactions);
 
@@ -64,7 +69,9 @@ public class Main {
                         } else if (option.equalsIgnoreCase("R")) {
 
                             while (true) {
+                                //method to showReportsMenu option
                                 showReportsMenu();
+                                //sorting through file in order by date
                                 transactions.sort(Comparator.comparing(Transactions::getParsedDate).thenComparing(Transactions::getParsedDate));
                                 try {
                                     int move = scanner.nextInt();
@@ -91,6 +98,7 @@ public class Main {
                                     } else if (move == 0) {
                                         break;
                                     } else {
+                                        //defensive coding
                                         System.out.println("Invalid input");
                                         break;
                                     }
@@ -103,6 +111,7 @@ public class Main {
                                 break;
 
                             } else {
+                                //defensive coding
                                 System.out.println("Invalid option");
                             }
                         }
@@ -114,6 +123,7 @@ public class Main {
                     System.exit(0);
                     break;
                 default:
+                    //defensive coding
                     System.out.println("Invalid option");
             }
         }
